@@ -50,3 +50,9 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# NBProject dirs
+/dist/
+/build/
+/nbproject/private/ 
+/nbproject/private/*
