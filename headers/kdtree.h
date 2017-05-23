@@ -25,13 +25,13 @@ typedef struct {
 typedef struct {
     Dot dotinfo;
     char dif;
-    KDTreeNode *left;
-    KDTreeNode *right;
+    struct KDTreeNode *left;
+    struct KDTreeNode *right;
 } KDTreeNode;
 
 typedef struct {
     KDTreeNode *info;
-    KDStack *next;
+    struct KDStack *next;
 } KDStack;
 
 
