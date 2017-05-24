@@ -14,3 +14,16 @@ Dot *dotInit(int x, int y, char *info) {
     strncpy(newdot->tag, info, TAGLEN);
     return newdot;
 }
+
+KDTreeNode *kdnodeInit(Dot *kddot, char dif){
+
+    KDTreeNode *kdnode = malloc(sizeof(KDTreeNode));
+    kdnode->dif = dif;
+    kdnode->left = NULL;
+    kdnode->right = NULL;
+    kdnode->dotinfo = *kddot;
+    return kdnode;
+}
+
+
+

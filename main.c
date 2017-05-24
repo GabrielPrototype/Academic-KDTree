@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ncurses.h>
 
 #include "headers/kdtree.h"
 
@@ -18,11 +19,15 @@
  * 
  */
 int main(int argc, char** argv) {
-    
-    
-    Dot *test = dotInit(2,4,"TESTE");
-    
-    printf("%d %d %s", test->xcord, test->ycord, test->tag);
+
+    tests();
     return (EXIT_SUCCESS);
 }
 
+void tests() {
+
+    Dot *test = dotInit(2, 4, "TESTE");
+    printf("%d %d %s\n", test->xcord, test->ycord, test->tag);
+    KDTreeNode *nodetest = kdnodeInit(test, 0);
+    getchar();
+}

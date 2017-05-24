@@ -34,5 +34,8 @@ typedef struct {
     struct KDStack *next;
 } KDStack;
 
-
+/*      prototypes */
+Dot *dotInit(int x, int y, char *info);
+KDTreeNode *kdnodeInit(Dot *kddot, char dif);
+/*      prototypes */
 #endif /* KDTREE_H */
