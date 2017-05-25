@@ -43,6 +43,12 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/graphviz</pElem>
+          </incDir>
+          <commandLine>-lgvc -lcgraph -lcdt -lgraph</commandLine>
+        </cTool>
       </compileType>
       <folder path="TestFiles/f1">
         <cTool>
