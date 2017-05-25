@@ -7,7 +7,7 @@
 #include "headers/kdtree.h"
 
 
-Dot *dotInit(int x, int y, char *info) {
+Dot *dotInit(double x, double y, char *info) {
     Dot *newdot = malloc(sizeof(Dot));
     newdot->xcord = x;
     newdot->ycord = y;
