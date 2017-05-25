@@ -34,14 +34,14 @@ void tests() {
 
 void graphvizTest() {
 
-    Agraph_t* G;
-    GVC_t* gvc;
-    gvc = gvContext();
-    G = createGraph();
-    gvLayout(gvc, G, "dot");
-    drawGraph(G);
-    gvFreeLayout(gvc, g);
-    agclose(G);
-    gvFreeContext(gvc);
+//    Agraph_t* G;
+//    GVC_t* gvc;
+//    gvc = gvContext();
+//    G = createGraph();
+//    gvLayout(gvc, G, "dot");
+//    drawGraph(G);
+//    gvFreeLayout(gvc, g);
+//    agclose(G);
+//    gvFreeContext(gvc);
 
 }
