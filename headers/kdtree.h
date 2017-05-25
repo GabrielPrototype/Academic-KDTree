@@ -18,7 +18,7 @@
 #define TAGLEN 35
 
 typedef struct {
-    int xcord, ycord;
+    double xcord, ycord;
     char tag[TAGLEN];
 } Dot;
 
@@ -35,7 +35,7 @@ typedef struct {
 } KDStack;
 
 /*      prototypes */
-Dot *dotInit(int x, int y, char *info);
+Dot *dotInit(double x, double y, char *info);
 KDTreeNode *kdnodeInit(Dot *kddot, char dif);
 /*      prototypes */
 #endif /* KDTREE_H */
