@@ -73,7 +73,6 @@ void kdtreeInsert(KDTreeNode **root, Dot kddot) {
     }
 }
 
-
 double kddotCalcDistance(Dot *dotA, Dot *dotB) { /* Euclidian metric*/
 
     double distX = dotA->xcord - dotB->xcord; //calculating number to square in next step
@@ -101,7 +100,7 @@ KDTreeNode *kdtreeSearchNearestInRadius(KDTreeNode **node, KDTreeNode *subroot, 
                 else
                     if ((center.xcord + radius) >= subroot->dotinfo.xcord)
                     kdtreeSearchNearestInRadius(subroot->right, center, radius, &*node);
-            } else {                /*caso contrario, compara y*/
+            } else { /*caso contrario, compara y*/
                 if ((center.ycord - radius) < subroot->dotinfo.ycord)
                     kdtreeSearchNearestInRadius(subroot->left, center, radius, &*node);
                 else
@@ -112,30 +111,58 @@ KDTreeNode *kdtreeSearchNearestInRadius(KDTreeNode **node, KDTreeNode *subroot, 
     }
 }
 
-KDTreeNode *kdtreeSearchInRadius(KDTreeNode **node, KDTreeNode *subroot, Dot center, double radius) {
+KDTreeNode *kdtreeSearchInRadius(KDStack **stack, KDTreeNode *subroot, Dot center, double radius, char flag) {
 
     double dist;
     if (subroot) { /* root != null*/
         dist = kddotCalcDistance(subroot->dotinfo, center);
 
-        if (dist < radius) /* ponto está dentro da circunferencia*/
-            *node = subroot;
-        else {
+        if (dist <= radius) { /* ponto está dentro da circunferencia*/
+            kdstackPush(&(*stack), subroot);
+            
+            if (flag == -1)
+                flag = 0;
+            
             if (subroot->dif == 0) {/*dif 0, compara X*/
                 if ((center.xcord - radius) < subroot->dotinfo.xcord)
-                    kdtreeSearchInRadius(subroot->left, center, radius, &*node);
+                    kdtreeSearchInRadius(subroot->left, center, radius, &*stack);
                 else
                     if ((center.xcord + radius) >= subroot->dotinfo.xcord)
-                    kdtreeSearchInRadius(subroot->right, center, radius, &*node);
-            } else {                /*caso contrario, compara y*/
+                    kdtreeSearchInRadius(subroot->right, center, radius, &*stack);
+            } else { /*caso contrario, compara y*/
                 if ((center.ycord - radius) < subroot->dotinfo.ycord)
-                    kdtreeSearchInRadius(subroot->left, center, radius, &*node);
+                    kdtreeSearchInRadius(subroot->left, center, radius, &*stack);
                 else
                     if ((center.ycord + radius) >= subroot->dotinfo.ycord)
-                    kdtreeSearchInRadius(subroot->right, center, radius, &*node);
+                    kdtreeSearchInRadius(subroot->right, center, radius, &*stack);
             }
+        }
+        else{
+            if (flag == 0)
+                flag = 1; /*quando a busca já se distanciou.*/
         }
     }
 }
 
+void kdstackPush(KDStack **stack, KDTreeNode *node) {
 
+    if (node) {
+        KDStack *newstk = malloc(sizeof (KDStack));
+        newstk->info = node;
+        *stack->next = (*stack) ? *stack : NULL;
+        *stack = newstk;
+    }
+}
+
+void kdstackPopV2(KDStack **stack, KDTreeNode **node) {
+    *node = *stack ? *stack->info : NULL;
+    *stack = *stack->next;
+}
+
+KDTreeNode * kdstackPop(KDStack **stack) {
+
+    KDTreeNode *aux;
+    aux = *stack ? *stack->info : NULL;
+    *stack = *stack->next;
+    return aux;
+}
