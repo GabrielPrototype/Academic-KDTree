@@ -11,6 +11,7 @@
                    projectFiles="true">
       <itemPath>kdtree.c</itemPath>
       <itemPath>main.c</itemPath>
+      <itemPath>util_functions.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Arquivos de Recurso"
@@ -44,11 +45,15 @@
       </toolsSet>
       <compileType>
         <cTool>
+          <standard>10</standard>
+          <commandlineTool>gcc</commandlineTool>
           <incDir>
             <pElem>/usr/include/graphviz</pElem>
           </incDir>
-          <commandLine>-lgvc -lcgraph -lcdt -lgraph</commandLine>
         </cTool>
+        <linkerTool>
+          <commandLine>-lgvc -lcgraph -lcdt -lm</commandLine>
+        </linkerTool>
       </compileType>
       <folder path="TestFiles/f1">
         <cTool>
@@ -72,6 +77,8 @@
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/newsimpletest.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="util_functions.c" ex="false" tool="0" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -116,6 +123,8 @@
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/newsimpletest.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="util_functions.c" ex="false" tool="0" flavor2="0">
       </item>
     </conf>
   </confs>

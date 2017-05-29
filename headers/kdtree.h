@@ -17,23 +17,22 @@
 
 #define TAGLEN 35
 
-typedef struct {
+typedef struct Dot {
     double xcord, ycord;
     char tag[TAGLEN];
 } Dot;
 
-typedef struct {
+typedef struct KDTreeNode {
     Dot dotinfo;
     char dif;
     struct KDTreeNode *left;
     struct KDTreeNode *right;
 } KDTreeNode;
 
-typedef struct {
+typedef struct KDStack {
     KDTreeNode *info;
     struct KDStack *next;
 } KDStack;
-
 /*      prototypes */
 Dot *dotInit(double x, double y, char *info);
 KDTreeNode *kdnodeInit(Dot *kddot, char dif);

@@ -18,11 +18,41 @@
 /*
  * 
  */
-int main(int argc, char** argv) {
 
-    tests();
+void tests();
+
+int main(int argc, char** argv) {
+    
+    insertTest();
+    //tests();
     return (EXIT_SUCCESS);
 }
+
+
+void insertTest(){
+    
+    double xcord, ycord;
+    char str[TAGLEN];
+    
+    KDTreeNode *root = NULL; 
+    Dot testdot;
+    
+    printf("Insira a descrição:");
+    fgetsplus(str,TAGLEN, stdin);
+    
+    while(strcmp(str,"exit")){
+        printf("insira os pontos: ");
+        scanf(" %lf %lf",&xcord, &ycord);
+        testdot.xcord = xcord;
+        testdot.ycord = ycord;
+        strncpy(testdot.tag,str,TAGLEN);
+        kdtreeInsert(&root, testdot);
+        printf("Insira a descrição:");
+        fgetsplus(str,TAGLEN, stdin);
+    }
+    
+    inOrden(root);
+};
 
 void tests() {
 
@@ -32,16 +62,17 @@ void tests() {
     getchar();
 }
 
-void graphvizTest() {
+//void graphvizTest() {
+//
+//    Agraph_t* G;
+//    GVC_t* gvc;
+//    gvc = gvContext();
+//    G = createGraph();
+//    gvLayout(gvc, G, "dot");
+//    drawGraph(G);
+//    gvFreeLayout(gvc, g);
+//    agclose(G);
+//    gvFreeContext(gvc);
+//
+//}
 
-    Agraph_t* G;
-    GVC_t* gvc;
-    gvc = gvContext();
-    G = createGraph();
-    gvLayout(gvc, G, "dot");
-    drawGraph(G);
-    gvFreeLayout(gvc, g);
-    agclose(G);
-    gvFreeContext(gvc);
-
-}
