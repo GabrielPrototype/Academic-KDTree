@@ -181,3 +181,11 @@ void inOrden(KDTreeNode *subroot) {
         inOrden(subroot->right);
     }
 }
+
+void preOrden(KDTreeNode *subroot) {
+    if (subroot != NULL) {
+        kdnodePrint(subroot);
+        preOrden(subroot->left);
+        preOrden(subroot->right);
+    }
+}
