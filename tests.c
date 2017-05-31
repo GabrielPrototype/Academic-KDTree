@@ -7,46 +7,6 @@
 
 #include "headers/kdtree.h"
 
-char depth[ 2056 ];
-int di;
-
-void treePrinterPush(char c) {
-    depth[ di++ ] = ' ';
-    depth[ di++ ] = c;
-    depth[ di++ ] = ' ';
-    depth[ di++ ] = ' ';
-    depth[ di ] = 0;
-}
-
-void TreePrinterPop() {
-    depth[ di -= 4 ] = 0;
-}
-
-void treePrinterRec(KDTreeNode *subroot) {
-
-    setbuf(stdout,NULL);
-    printf("(%03.2f;%03.2f)\n", subroot->dotinfo.xcord, subroot->dotinfo.ycord);
-    if (subroot->left) {
-        printf("%s `-(l)-", depth);
-        treePrinterPush('|');
-        treePrinterRec(subroot->left);
-        TreePrinterPop(depth);
-    }
-    if (subroot->right) {
-        printf("%s `-(r)-", depth);
-        treePrinterPush(' ');
-        treePrinterRec(subroot->right);
-        TreePrinterPop(depth);
-    }
-}
-
-void treePrinter(KDTreeNode *subroot) {
-
-    if (subroot) {
-        treePrinterRec(subroot);
-    }
-}
-
 
 //void graphvizTest() {
 //
