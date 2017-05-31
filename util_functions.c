@@ -5,9 +5,9 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdio_ext.h>
 #include <string.h>
-
-
 
 char* fgetsplus(char *restrict str, int count, FILE *restrict stream){
 
@@ -17,4 +17,10 @@ char* fgetsplus(char *restrict str, int count, FILE *restrict stream){
     if(str[len-1] == '\n' && str[len] == '\0' )
         str[len-1] = '\0';
     return str;
+}
+
+double randFrom(double min, double max) 
+{
+    double f = (double)rand() / RAND_MAX;
+    return min + f * (max - min);
 }
