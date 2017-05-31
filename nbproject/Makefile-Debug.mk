@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/kdtree.o \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/tests.o \
 	${OBJECTDIR}/util_functions.o
 
 # Test Directory
@@ -83,6 +84,11 @@ ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -I/usr/include/graphviz -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
+
+${OBJECTDIR}/tests.o: tests.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -I/usr/include/graphviz -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/tests.o tests.c
 
 ${OBJECTDIR}/util_functions.o: util_functions.c
 	${MKDIR} -p ${OBJECTDIR}
@@ -131,6 +137,19 @@ ${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.c
 	    $(COMPILE.c) -g -I/usr/include/graphviz -std=c11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main_nomain.o main.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/main.o ${OBJECTDIR}/main_nomain.o;\
+	fi
+
+${OBJECTDIR}/tests_nomain.o: ${OBJECTDIR}/tests.o tests.c 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/tests.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -g -I/usr/include/graphviz -std=c11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/tests_nomain.o tests.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/tests.o ${OBJECTDIR}/tests_nomain.o;\
 	fi
 
 ${OBJECTDIR}/util_functions_nomain.o: ${OBJECTDIR}/util_functions.o util_functions.c 

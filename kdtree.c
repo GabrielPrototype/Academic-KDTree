@@ -163,7 +163,7 @@ KDTreeNode * kdstackPop(KDStack **stack) {
 }
 
 void kdnodePrint(KDTreeNode *node) {
-    printf("<(%.2f,%.2f) -[%s]>", node->dotinfo.xcord, node->dotinfo.ycord, node->dotinfo.tag);
+    printf("((%.2f,%.2f)-[%s]) ", node->dotinfo.xcord, node->dotinfo.ycord, node->dotinfo.tag);
 }
 
 void inOrden(KDTreeNode *subroot) {
@@ -176,8 +176,11 @@ void inOrden(KDTreeNode *subroot) {
 
 void preOrden(KDTreeNode *subroot) {
     if (subroot != NULL) {
+        printf("(");
         kdnodePrint(subroot);
         preOrden(subroot->left);
+        printf(",");
         preOrden(subroot->right);
+        printf(")");
     }
 }
