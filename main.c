@@ -54,7 +54,7 @@ void insertTest(){
     preOrden(root);
     printf("\n");
     treePrinter(root);
-    //print_t(root);
+
     getchar();
 };
 
