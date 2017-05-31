@@ -52,6 +52,8 @@ void insertTest(){
     }
     
     preOrden(root);
+    printf("\n");
+    print_t(root);
     getchar();
 };
 
@@ -77,69 +79,51 @@ void tests() {
 //
 //}
 
-//int _print_t(tnode *tree, int is_left, int offset, int depth, char s[20][255])
-//{
-//    char b[20];
-//    int width = 5;
-//
-//    if (!tree) return 0;
-//
-//    sprintf(b, "(%03d)", tree->val);
-//
-//    int left  = _print_t(tree->left,  1, offset,                depth + 1, s);
-//    int right = _print_t(tree->right, 0, offset + left + width, depth + 1, s);
-//
-//#ifdef COMPACT
-//    for (int i = 0; i < width; i++)
-//        s[depth][offset + left + i] = b[i];
-//
-//    if (depth && is_left) {
-//
-//        for (int i = 0; i < width + right; i++)
-//            s[depth - 1][offset + left + width/2 + i] = '-';
-//
-//        s[depth - 1][offset + left + width/2] = '.';
-//
-//    } else if (depth && !is_left) {
-//
-//        for (int i = 0; i < left + width; i++)
-//            s[depth - 1][offset - width/2 + i] = '-';
-//
-//        s[depth - 1][offset + left + width/2] = '.';
-//    }
-//#else
-//    for (int i = 0; i < width; i++)
-//        s[2 * depth][offset + left + i] = b[i];
-//
-//    if (depth && is_left) {
-//
-//        for (int i = 0; i < width + right; i++)
-//            s[2 * depth - 1][offset + left + width/2 + i] = '-';
-//
-//        s[2 * depth - 1][offset + left + width/2] = '+';
-//        s[2 * depth - 1][offset + left + width + right + width/2] = '+';
-//
-//    } else if (depth && !is_left) {
-//
-//        for (int i = 0; i < left + width; i++)
-//            s[2 * depth - 1][offset - width/2 + i] = '-';
-//
-//        s[2 * depth - 1][offset + left + width/2] = '+';
-//        s[2 * depth - 1][offset - width/2 - 1] = '+';
-//    }
-//#endif
-//
-//    return left + width + right;
-//}
-//
-//void print_t(tnode *tree)
-//{
-//    char s[20][255];
-//    for (int i = 0; i < 20; i++)
-//        sprintf(s[i], "%80s", " ");
-//
-//    _print_t(tree, 0, 0, 0, s);
-//
-//    for (int i = 0; i < 20; i++)
-//        printf("%s\n", s[i]);
-//}
+int _print_t(KDTreeNode *subroot, int is_left, int offset, int depth, char s[30][255])
+{
+    char b[40];
+    int width = 16;
+
+    if (!subroot) return 0;
+
+    snprintf(b, width,"(%03.2f;%03.2f)",subroot->dotinfo.xcord,subroot->dotinfo.ycord);
+
+    int left  = _print_t(subroot->left,  1, offset,                depth + 1, s);
+    int right = _print_t(subroot->right, 0, offset + left + width, depth + 1, s);
+    
+
+    for (int i = 0; i < width; i++)
+        s[2 * depth][offset + left + i] = b[i];
+
+    if (depth && is_left) {
+
+        for (int i = 0; i < width + right; i++)
+            s[2 * depth - 1][offset + left + width/2 + i] = '-';
+
+        s[2 * depth - 1][offset + left + width/2] = '+';
+        s[2 * depth - 1][offset + left + width + right + width/2] = '+';
+
+    } else if (depth && !is_left) {
+        
+        for (int i = 0; i < left + width; i++)
+            s[2 * depth - 1][offset - width/2 + i] = '-';
+
+        s[2 * depth - 1][offset + left + width/2] = '+';
+        s[2 * depth - 1][offset - width/2 - 1] = '+';
+    }
+
+    return left + width + right;
+}
+
+void print_t(KDTreeNode *root)
+{
+    int lines = 30;
+    char s[lines][255];
+    for (int i = 0; i < lines; i++)
+        sprintf(s[i], "%80s", " ");
+
+    _print_t(root, 0, 0, 0, s);
+
+    for (int i = 0; i < lines; i++)
+        printf("%s\n", s[i]);
+}
