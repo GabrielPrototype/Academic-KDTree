@@ -176,11 +176,51 @@ void inOrden(KDTreeNode *subroot) {
 
 void preOrden(KDTreeNode *subroot) {
     if (subroot != NULL) {
-        printf("(");
+        printf("\n{");
         kdnodePrint(subroot);
         preOrden(subroot->left);
-        printf(",");
+        printf("\n,");
         preOrden(subroot->right);
-        printf(")");
+        printf("}\n");
+    }
+}
+
+char tprinter_depth[ 2056 ];
+int tprinter_di;
+
+void treePrinterPush(char c) {
+    tprinter_depth[ tprinter_di++ ] = ' ';
+    tprinter_depth[ tprinter_di++ ] = c;
+    tprinter_depth[ tprinter_di++ ] = ' ';
+    tprinter_depth[ tprinter_di++ ] = ' ';
+    tprinter_depth[ tprinter_di ] = 0;
+}
+
+void TreePrinterPop() {
+    tprinter_depth[ tprinter_di -= 4 ] = 0;
+}
+
+void treePrinterRec(KDTreeNode *subroot) {
+
+    setbuf(stdout,NULL);
+    printf("(%03.2f;%03.2f)\n", subroot->dotinfo.xcord, subroot->dotinfo.ycord);
+    if (subroot->left) {
+        printf("%s `-(l)-", tprinter_depth);
+        treePrinterPush('|');
+        treePrinterRec(subroot->left);
+        TreePrinterPop(tprinter_depth);
+    }
+    if (subroot->right) {
+        printf("%s `-(r)-", tprinter_depth);
+        treePrinterPush(' ');
+        treePrinterRec(subroot->right);
+        TreePrinterPop(tprinter_depth);
+    }
+}
+
+void treePrinter(KDTreeNode *subroot) {
+
+    if (subroot) {
+        treePrinterRec(subroot);
     }
 }
