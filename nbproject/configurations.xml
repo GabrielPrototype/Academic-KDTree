@@ -5,6 +5,7 @@
                    displayName="Arquivos de Cabeçalho"
                    projectFiles="true">
       <itemPath>headers/kdtree.h</itemPath>
+      <itemPath>headers/util_functions.h</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Arquivos de Código-Fonte"
@@ -73,6 +74,8 @@
       </folder>
       <item path="headers/kdtree.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="headers/util_functions.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="kdtree.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
@@ -120,6 +123,8 @@
         </linkerTool>
       </folder>
       <item path="headers/kdtree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="headers/util_functions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="kdtree.c" ex="false" tool="0" flavor2="0">
       </item>
