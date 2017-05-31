@@ -12,45 +12,71 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <gvc.h>
+#include <stdlib.h>
 
 #include "headers/kdtree.h"
+#include "headers/util_functions.h"
 
 /*
  * 
  */
 
+/*  Prototypes */
 void tests();
+void autoInsertTest();
+void insertTest();
+/*  Prototypes */
 
 int main(int argc, char** argv) {
-    
-    insertTest();
+
+    autoInsertTest();
+    //insertTest();
     //tests();
     return (EXIT_SUCCESS);
 }
 
 
-void insertTest(){
-    
+void autoInsertTest() {
+
+    KDTreeNode *root = NULL;
     double xcord, ycord;
-    char str[TAGLEN];
-    
-    KDTreeNode *root = NULL; 
     Dot testdot;
-    
-    printf("Insira a descrição:");
-    fgetsplus(str,TAGLEN, stdin);
-    
-    while(strcmp(str,"exit")){
-        printf("insira os pontos: ");
-        scanf(" %lf %lf",&xcord, &ycord);
+    int i;
+    for (i = 0; i < 30; i++) {
+        xcord = randFrom(-99.0, 99.0);
+        ycord = randFrom(-99.0, 99.0);
         testdot.xcord = xcord;
         testdot.ycord = ycord;
-        strncpy(testdot.tag,str,TAGLEN);
+        strncpy(testdot.tag, " ", TAGLEN);
+        kdtreeInsert(&root, testdot);
+    }
+    //preOrden(root);
+    printf("\n\n");
+    treePrinter(root);
+}
+
+void insertTest() {
+
+    double xcord, ycord;
+    char str[TAGLEN];
+
+    KDTreeNode *root = NULL;
+    Dot testdot;
+
+    printf("Insira a descrição:");
+    fgetsplus(str, TAGLEN, stdin);
+
+    while (strcmp(str, "exit")) {
+        printf("insira os pontos: ");
+        scanf(" %lf %lf", &xcord, &ycord);
+        testdot.xcord = xcord;
+        testdot.ycord = ycord;
+        strncpy(testdot.tag, str, TAGLEN);
         kdtreeInsert(&root, testdot);
         printf("Insira a descrição:");
-        fgetsplus(str,TAGLEN, stdin);
+        fgetsplus(str, TAGLEN, stdin);
     }
-    
+
     preOrden(root);
     printf("\n");
     treePrinter(root);
