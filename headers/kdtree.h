@@ -35,6 +35,31 @@ typedef struct KDStack {
 } KDStack;
 /*      prototypes */
 Dot *dotInit(double x, double y, char *info);
+
 KDTreeNode *kdnodeInit(Dot *kddot, char dif);
+
+char kddotCompare(Dot *dot1, Dot *dot2, char dif);
+
+void kdtreeInsert(KDTreeNode **root, Dot kddot);
+
+double kddotCalcDistance(Dot *dotA, Dot *dotB);
+
+KDTreeNode *kdtreeSearchNearestInRadius(KDTreeNode **node, KDTreeNode *subroot, Dot center, double radius);
+
+KDTreeNode *kdtreeSearchInRadius(KDStack **stack, KDTreeNode *subroot, Dot center, double radius);
+
+void kdstackPush(KDStack **stack, KDTreeNode *node);
+
+void kdstackPopV2(KDStack **stack, KDTreeNode **node);
+
+KDTreeNode * kdstackPop(KDStack **stack);
+
+void kdnodePrint(KDTreeNode *node);
+
+void inOrden(KDTreeNode *subroot);
+
+void preOrden(KDTreeNode *subroot);
+
+void treePrinter(KDTreeNode *subroot);
 /*      prototypes */
 #endif /* KDTREE_H */
