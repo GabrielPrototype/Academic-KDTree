@@ -9,13 +9,13 @@
 #include <stdio_ext.h>
 #include <string.h>
 
-char* fgetsplus(char *restrict str, int count, FILE * restrict stream) {
+char* fgetsplus(char str[], int count, FILE * restrict stream) {
 
     __fpurge(stdin);
     fgets(str, count, stream);
-    int len = strnlen(str, sizeof (str));
-    if (str[len - 1] == '\n')
-        str[len - 1] = '\0';
+    size_t ln = strlen(str) - 1;
+    if (str[ln] == '\n')
+        str[ln] = '\0';
     return str;
 }
 
