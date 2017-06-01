@@ -12,8 +12,8 @@
 
 Dot *dotInit(double x, double y, char *info) {
     Dot *newdot = malloc(sizeof (Dot));
-    newdot->xcord = x;
-    newdot->ycord = y;
+    newdot->xcoord = x;
+    newdot->ycoord = y;
     strncpy(newdot->tag, info, TAGLEN);
     return newdot;
 }
@@ -31,9 +31,9 @@ KDTreeNode *kdnodeInit(Dot *kddot, char dif) {
 char kddotCompare(Dot *dot1, Dot *dot2, char dif) {
 
     if (dif == 0) /* Caso diferenciador seja 0, compara-se a dimensão 1, X no caso*/
-        return (dot1->xcord > dot2->xcord);
+        return (dot1->xcoord > dot2->xcoord);
     else /* Caso contrario, compara-se a dimensão 2, Y no caso*/
-        return (dot1->ycord > dot2->ycord);
+        return (dot1->ycoord > dot2->ycoord);
 }
 
 void kdtreeInsert(KDTreeNode **root, Dot kddot) {
@@ -60,8 +60,8 @@ void kdtreeInsert(KDTreeNode **root, Dot kddot) {
 
 double kddotCalcDistance(Dot *dotA, Dot *dotB) { /* Euclidian metric*/
 
-    double distX = dotA->xcord - dotB->xcord; //calculating number to square in next step
-    double distY = dotA->ycord - dotB->ycord;
+    double distX = dotA->xcoord - dotB->xcoord; //calculating number to square in next step
+    double distY = dotA->ycoord - dotB->ycoord;
     double dist;
 
     dist = pow(distX, 2) + pow(distY, 2); //calculating Euclidean distance
@@ -80,16 +80,16 @@ KDTreeNode *kdtreeSearchNearestInRadius(KDTreeNode **node, KDTreeNode *subroot, 
             *node = subroot;
         else {
             if (subroot->dif == 0) {/*dif 0, compara X*/
-                if ((center.xcord - radius) < subroot->dotinfo.xcord)
+                if ((center.xcoord - radius) < subroot->dotinfo.xcoord)
                     kdtreeSearchNearestInRadius(&*node, subroot->left, center, radius);
                 else
-                    if ((center.xcord + radius) >= subroot->dotinfo.xcord)
+                    if ((center.xcoord + radius) >= subroot->dotinfo.xcoord)
                     kdtreeSearchNearestInRadius(&*node, subroot->right, center, radius);
             } else { /*caso contrario, compara y*/
-                if ((center.ycord - radius) < subroot->dotinfo.ycord)
+                if ((center.ycoord - radius) < subroot->dotinfo.ycoord)
                     kdtreeSearchNearestInRadius(&*node, subroot->left, center, radius);
                 else
-                    if ((center.ycord + radius) >= subroot->dotinfo.ycord)
+                    if ((center.ycoord + radius) >= subroot->dotinfo.ycoord)
                     kdtreeSearchNearestInRadius(&*node, subroot->right, center, radius);
             }
         }
@@ -106,16 +106,16 @@ KDTreeNode *kdtreeSearchInRadius(KDStack **stack, KDTreeNode *subroot, Dot cente
             kdstackPush(&(*stack), subroot);
 
             if (subroot->dif == 0) {/*dif 0, compara X*/
-                if ((center.xcord - radius) < subroot->dotinfo.xcord)
+                if ((center.xcoord - radius) < subroot->dotinfo.xcoord)
                     kdtreeSearchInRadius(&*stack, subroot->left, center, radius);
                 else
-                    if ((center.xcord + radius) >= subroot->dotinfo.xcord)
+                    if ((center.xcoord + radius) >= subroot->dotinfo.xcoord)
                     kdtreeSearchInRadius(&*stack, subroot->right, center, radius);
             } else { /*caso contrario, compara y*/
-                if ((center.ycord - radius) < subroot->dotinfo.ycord)
+                if ((center.ycoord - radius) < subroot->dotinfo.ycoord)
                     kdtreeSearchInRadius(&*stack, subroot->left, center, radius);
                 else
-                    if ((center.ycord + radius) >= subroot->dotinfo.ycord)
+                    if ((center.ycoord + radius) >= subroot->dotinfo.ycoord)
                     kdtreeSearchInRadius(&*stack, subroot->right, center, radius);
             }
         }
@@ -146,25 +146,28 @@ KDTreeNode * kdstackPop(KDStack **stack) {
 }
 
 void kdnodePrint(KDTreeNode *node) {
-    printf("((%.2f,%.2f)-[%s]) ", node->dotinfo.xcord, node->dotinfo.ycord, node->dotinfo.tag);
+    printf("((%.2f,%.2f)-[%s]) ", node->dotinfo.xcoord, node->dotinfo.ycoord, node->dotinfo.tag);
 }
 
 void inOrden(KDTreeNode *subroot) {
     if (subroot != NULL) {
+        printf("{");
         inOrden(subroot->left);
         kdnodePrint(subroot);
+        printf(",");
         inOrden(subroot->right);
+        printf("}");
     }
 }
 
 void preOrden(KDTreeNode *subroot) {
     if (subroot != NULL) {
-        printf("\n{");
+        printf("{");
         kdnodePrint(subroot);
         preOrden(subroot->left);
-        printf("\n,");
+        printf(",");
         preOrden(subroot->right);
-        printf("}\n");
+        printf("}");
     }
 }
 
@@ -186,19 +189,21 @@ void TreePrinterPop() {
 void treePrinterRec(KDTreeNode *subroot) {
 
     setbuf(stdout, NULL);
-    printf("(%03.2f;%03.2f)\n", subroot->dotinfo.xcord, subroot->dotinfo.ycord);
-    if (subroot->left) {
-        printf("%s `-(LEFT)-", tprinter_depth);
-        treePrinterPush('|');
-        treePrinterRec(subroot->left);
-        TreePrinterPop(tprinter_depth);
-    }
+    printf("(%03.2f; %03.2f)\n", subroot->dotinfo.xcoord, subroot->dotinfo.ycoord);
+    
     if (subroot->right) {
-        printf("%s `-(RIGHT)-", tprinter_depth);
+        printf("%s `-(RIGHT)--", tprinter_depth);
         treePrinterPush(' ');
         treePrinterRec(subroot->right);
         TreePrinterPop(tprinter_depth);
     }
+    if (subroot->left) {
+        printf("%s `-(LEFT )--", tprinter_depth);
+        treePrinterPush('|');
+        treePrinterRec(subroot->left);
+        TreePrinterPop(tprinter_depth);
+    }
+    
 }
 
 void treePrinter(KDTreeNode *subroot) {
