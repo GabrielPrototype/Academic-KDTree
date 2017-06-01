@@ -18,7 +18,7 @@
 #define TAGLEN 35
 
 typedef struct Dot {
-    double xcord, ycord;
+    double xcoord, ycoord;
     char tag[TAGLEN];
 } Dot;
 
