@@ -1,4 +1,6 @@
-/*
+/* 
+ * File:   util_functions.h
+ * Author: Gabriel L. P. Abreu
  *
  */
 
@@ -25,25 +27,6 @@ KDTreeNode *kdnodeInit(Dot *kddot, char dif) {
     kdnode->dotinfo = *kddot;
     return kdnode;
 }
-
-//int kddotCompare(KDTreeNode node1, KDTreeNode node2, char dif) {
-//    /* Caso diferenciador seja 1, compara-se a dimensão 2, Y no caso*/
-//    if (dif == 1) { 
-//        if (node1.pY == node2.pY)
-//            return 0;
-//        else {
-//            return (node1.pY > node2.pY) ? 1 : -1;
-//        }
-//
-//    }
-//    /* Caso diferenciador seja 0, compara-se a dimensão 1, X no caso*/
-//    if (node1.pX == node2.pX)
-//        return 0;
-//    else {
-//        return (node1.pX > node2.pX) ? 1 : -1;
-//    }
-//
-//}
 
 char kddotCompare(Dot *dot1, Dot *dot2, char dif) {
 
@@ -202,16 +185,16 @@ void TreePrinterPop() {
 
 void treePrinterRec(KDTreeNode *subroot) {
 
-    setbuf(stdout,NULL);
+    setbuf(stdout, NULL);
     printf("(%03.2f;%03.2f)\n", subroot->dotinfo.xcord, subroot->dotinfo.ycord);
     if (subroot->left) {
-        printf("%s `-(l)-", tprinter_depth);
+        printf("%s `-(LEFT)-", tprinter_depth);
         treePrinterPush('|');
         treePrinterRec(subroot->left);
         TreePrinterPop(tprinter_depth);
     }
     if (subroot->right) {
-        printf("%s `-(r)-", tprinter_depth);
+        printf("%s `-(RIGHT)-", tprinter_depth);
         treePrinterPush(' ');
         treePrinterRec(subroot->right);
         TreePrinterPop(tprinter_depth);
