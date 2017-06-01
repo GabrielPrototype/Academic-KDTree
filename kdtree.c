@@ -72,27 +72,35 @@ double kddotCalcDistance(Dot *dotA, Dot *dotB) { /* Euclidian metric*/
 
 KDTreeNode *kdtreeSearchNearestInRadius(KDTreeNode **node, KDTreeNode *subroot, Dot center, double radius) {
 
+    double neardist = radius + 1;
+    kdtreeSearchNearestInRadiusRec(&*node, subroot->left, center, radius, &neardist);
+}
+
+KDTreeNode *kdtreeSearchNearestInRadiusRec(KDTreeNode **node, KDTreeNode *subroot, Dot center, double radius, double *neardist) {
+
     double dist;
     if (subroot) { /* root != null*/
         dist = kddotCalcDistance(&subroot->dotinfo, &center);
 
-        if (dist <= radius) /* ponto está dentro da circunferencia*/
+        if (dist <= radius && dist < *neardist) { /* ponto está dentro da circunferencia*/
             *node = subroot;
-        else {
-            if (subroot->dif == 0) {/*dif 0, compara X*/
-                if ((center.xcoord - radius) < subroot->dotinfo.xcoord)
-                    kdtreeSearchNearestInRadius(&*node, subroot->left, center, radius);
-                else
-                    if ((center.xcoord + radius) >= subroot->dotinfo.xcoord)
-                    kdtreeSearchNearestInRadius(&*node, subroot->right, center, radius);
-            } else { /*caso contrario, compara y*/
-                if ((center.ycoord - radius) < subroot->dotinfo.ycoord)
-                    kdtreeSearchNearestInRadius(&*node, subroot->left, center, radius);
-                else
-                    if ((center.ycoord + radius) >= subroot->dotinfo.ycoord)
-                    kdtreeSearchNearestInRadius(&*node, subroot->right, center, radius);
-            }
+            *neardist = dist;
         }
+        //else {
+        if (subroot->dif == 0) {/*dif 0, compara X*/
+            if ((center.xcoord - radius) < subroot->dotinfo.xcoord)
+                kdtreeSearchNearestInRadiusRec(&*node, subroot->left, center, radius, &*neardist);
+            //else
+            if ((center.xcoord + radius) >= subroot->dotinfo.xcoord)
+                kdtreeSearchNearestInRadiusRec(&*node, subroot->right, center, radius, &*neardist);
+        } else { /*caso contrario, compara y*/
+            if ((center.ycoord - radius) < subroot->dotinfo.ycoord)
+                kdtreeSearchNearestInRadiusRec(&*node, subroot->left, center, radius, &*neardist);
+            //else
+            if ((center.ycoord + radius) >= subroot->dotinfo.ycoord)
+                kdtreeSearchNearestInRadiusRec(&*node, subroot->right, center, radius, &*neardist);
+        }
+        //}
     }
 }
 
@@ -108,14 +116,14 @@ KDTreeNode *kdtreeSearchInRadius(KDStack **stack, KDTreeNode *subroot, Dot cente
         if (subroot->dif == 0) {/*dif 0, compara X*/
             if ((center.xcoord - radius) < subroot->dotinfo.xcoord)
                 kdtreeSearchInRadius(&*stack, subroot->left, center, radius);
-            else
-                if ((center.xcoord + radius) >= subroot->dotinfo.xcoord)
+
+            if ((center.xcoord + radius) >= subroot->dotinfo.xcoord)
                 kdtreeSearchInRadius(&*stack, subroot->right, center, radius);
         } else { /*caso contrario, compara y*/
             if ((center.ycoord - radius) < subroot->dotinfo.ycoord)
                 kdtreeSearchInRadius(&*stack, subroot->left, center, radius);
-            else
-                if ((center.ycoord + radius) >= subroot->dotinfo.ycoord)
+
+            if ((center.ycoord + radius) >= subroot->dotinfo.ycoord)
                 kdtreeSearchInRadius(&*stack, subroot->right, center, radius);
         }
 
@@ -193,13 +201,13 @@ void treePrinterRec(KDTreeNode *subroot) {
 
     if (subroot->right) {
         printf("%s `-(RIGHT)--", tprinter_depth);
-        treePrinterPush(' ');
+        treePrinterPush('|');
         treePrinterRec(subroot->right);
         TreePrinterPop(tprinter_depth);
     }
     if (subroot->left) {
         printf("%s `-(LEFT )--", tprinter_depth);
-        treePrinterPush('|');
+        treePrinterPush(' ');
         treePrinterRec(subroot->left);
         TreePrinterPop(tprinter_depth);
     }

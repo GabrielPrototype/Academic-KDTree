@@ -46,6 +46,8 @@ double kddotCalcDistance(Dot *dotA, Dot *dotB);
 
 KDTreeNode *kdtreeSearchNearestInRadius(KDTreeNode **node, KDTreeNode *subroot, Dot center, double radius);
 
+KDTreeNode *kdtreeSearchNearestInRadiusRec(KDTreeNode **node, KDTreeNode *subroot, Dot center, double radius, double *neardist);
+
 KDTreeNode *kdtreeSearchInRadius(KDStack **stack, KDTreeNode *subroot, Dot center, double radius);
 
 void kdstackPush(KDStack **stack, KDTreeNode *node);
