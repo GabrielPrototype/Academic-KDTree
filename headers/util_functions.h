@@ -13,7 +13,7 @@
 
 
 
-char* fgetsplus(char *restrict str, int count, FILE *restrict stream);
+char* fgetsplus(char str[], int count, FILE *restrict stream);
 
 double randFrom(double min, double max);
 
