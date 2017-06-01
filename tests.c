@@ -18,7 +18,7 @@ int _print_t(KDTreeNode *subroot, int is_left, int offset, int depth, char s[30]
 
     if (!subroot) return 0;
 
-    sprintf(b, "(%03.2f;%03.2f)", subroot->dotinfo.xcord, subroot->dotinfo.ycord);
+    sprintf(b, "(%03.2f;%03.2f)", subroot->dotinfo.xcoord, subroot->dotinfo.ycoord);
 
     int left = _print_t(subroot->left, 1, offset, depth + 1, s);
     int right = _print_t(subroot->right, 0, offset + left + width, depth + 1, s);
@@ -65,8 +65,8 @@ void autoInsertTest() {
     Dot testdot;
     int i;
     for (i = 0; i < 30; i++) {
-        testdot.xcord = randFrom(-99.0, 99.0);
-        testdot.ycord = randFrom(-99.0, 99.0);
+        testdot.xcoord = randFrom(-99.0, 99.0);
+        testdot.ycoord = randFrom(-99.0, 99.0);
         strncpy(testdot.tag, " ", TAGLEN);
         kdtreeInsert(&root, testdot);
     }
@@ -89,8 +89,8 @@ void insertTest() {
     while (strcmp(str, "exit")) {
         printf("insira os pontos: ");
         scanf(" %lf %lf", &xcord, &ycord);
-        testdot.xcord = xcord;
-        testdot.ycord = ycord;
+        testdot.xcoord = xcord;
+        testdot.ycoord = ycord;
         strncpy(testdot.tag, str, TAGLEN);
         kdtreeInsert(&root, testdot);
         printf("Insira a descrição:");
@@ -107,7 +107,7 @@ void insertTest() {
 void tests() {
 
     Dot *test = dotInit(2, 4, "TESTE");
-    printf("%f %f %s\n", test->xcord, test->ycord, test->tag);
+    printf("%f %f %s\n", test->xcoord, test->ycoord, test->tag);
     KDTreeNode *nodetest = kdnodeInit(test, 0);
     getchar();
 }
