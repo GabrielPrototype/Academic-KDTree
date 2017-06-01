@@ -64,7 +64,6 @@ int main(int argc, char** argv) {
                 if (sscanf(cmd_aux_ptr, "%lf", &kddot.ycoord) != 0) {
 
                     if (kddot.ycoord >= 0 && kddot.ycoord <= 90 && kddot.xcoord >= 0 && kddot.xcoord <= 180) {
-                        //printf("---> ok");
                         strncpy(kddot.tag, " ", TAGLEN);
                         kdtreeInsert(&root, kddot);
                         printf("\n---> Inserted (%7.3f, %7.3f) successfully\n", kddot.xcoord, kddot.ycoord);
@@ -99,7 +98,6 @@ int main(int argc, char** argv) {
             strncpy(cmd_line, &cmd_line[24], CMD_LINE_MAX);
             strncpy(cmd_aux, cmd_line, CMD_LINE_MAX);
             cmd_ok = !NULL;
-            //cmd_aux_ptr = strtok(cmd_line, "; ");
 
             if (sscanf(cmd_aux, "%lf", &kddot.xcoord) != 0) {
 
@@ -124,7 +122,6 @@ int main(int argc, char** argv) {
             strncpy(cmd_line, &cmd_line[28], CMD_LINE_MAX);
             strncpy(cmd_aux, cmd_line, CMD_LINE_MAX);
             cmd_ok = !NULL;
-            //cmd_aux_ptr = strtok(cmd_line, "; ");
 
             if (sscanf(cmd_aux, "%lf", &kddot.xcoord) != 0) {
 
@@ -133,7 +130,8 @@ int main(int argc, char** argv) {
                     if (sscanf(cmd_aux, "%*lf;%*lf WITH RADIUS %lf", &radius) != 0) {
                         kdtreeSearchInRadius(&kdstck, root, kddot, radius);
                         printf("---- All points within a radius %.2f with center at %.2f;%.2f:\n", radius, kddot.xcoord, kddot.ycoord);
-                        while (resultNode = kdstackPop(&kdstck)) {
+                        while (kdstck) {
+                            resultNode = kdstackPop(&kdstck);
                             if (resultNode)
                                 printf("---- (%07.2f;%07.2f)\n", resultNode->dotinfo.xcoord, resultNode->dotinfo.ycoord);
                         }
@@ -181,8 +179,7 @@ int main(int argc, char** argv) {
 
         }
 
-        cmd_line[0] = "\0";
-        //cliTextHead();
+        cmd_line[0] = '\0';
         printf("\nCMD>");
         fgetsplus(cmd_line, CMD_LINE_MAX, stdin);
         strToUpper(cmd_line, sizeof (cmd_line));

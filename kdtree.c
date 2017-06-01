@@ -104,21 +104,21 @@ KDTreeNode *kdtreeSearchInRadius(KDStack **stack, KDTreeNode *subroot, Dot cente
 
         if (dist <= radius) { /* ponto está dentro da circunferencia*/
             kdstackPush(&(*stack), subroot);
-
-            if (subroot->dif == 0) {/*dif 0, compara X*/
-                if ((center.xcoord - radius) < subroot->dotinfo.xcoord)
-                    kdtreeSearchInRadius(&*stack, subroot->left, center, radius);
-                else
-                    if ((center.xcoord + radius) >= subroot->dotinfo.xcoord)
-                    kdtreeSearchInRadius(&*stack, subroot->right, center, radius);
-            } else { /*caso contrario, compara y*/
-                if ((center.ycoord - radius) < subroot->dotinfo.ycoord)
-                    kdtreeSearchInRadius(&*stack, subroot->left, center, radius);
-                else
-                    if ((center.ycoord + radius) >= subroot->dotinfo.ycoord)
-                    kdtreeSearchInRadius(&*stack, subroot->right, center, radius);
-            }
         }
+        if (subroot->dif == 0) {/*dif 0, compara X*/
+            if ((center.xcoord - radius) < subroot->dotinfo.xcoord)
+                kdtreeSearchInRadius(&*stack, subroot->left, center, radius);
+            else
+                if ((center.xcoord + radius) >= subroot->dotinfo.xcoord)
+                kdtreeSearchInRadius(&*stack, subroot->right, center, radius);
+        } else { /*caso contrario, compara y*/
+            if ((center.ycoord - radius) < subroot->dotinfo.ycoord)
+                kdtreeSearchInRadius(&*stack, subroot->left, center, radius);
+            else
+                if ((center.ycoord + radius) >= subroot->dotinfo.ycoord)
+                kdtreeSearchInRadius(&*stack, subroot->right, center, radius);
+        }
+
     }
 }
 
@@ -127,7 +127,7 @@ void kdstackPush(KDStack **stack, KDTreeNode *node) {
     if (node) {
         KDStack *newstk = malloc(sizeof (KDStack));
         newstk->info = node;
-        (*stack)->next = (*stack) ? *stack : NULL;
+        newstk->next = *stack;
         *stack = newstk;
     }
 }
@@ -190,7 +190,7 @@ void treePrinterRec(KDTreeNode *subroot) {
 
     setbuf(stdout, NULL);
     printf("(%06.2f; %05.2f)\n", subroot->dotinfo.xcoord, subroot->dotinfo.ycoord);
-    
+
     if (subroot->right) {
         printf("%s `-(RIGHT)--", tprinter_depth);
         treePrinterPush(' ');
@@ -203,7 +203,7 @@ void treePrinterRec(KDTreeNode *subroot) {
         treePrinterRec(subroot->left);
         TreePrinterPop(tprinter_depth);
     }
-    
+
 }
 
 void treePrinter(KDTreeNode *subroot) {
