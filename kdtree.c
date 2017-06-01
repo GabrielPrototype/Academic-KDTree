@@ -136,7 +136,7 @@ void kdstackPopV2(KDStack **stack, KDTreeNode **node) {
     *node = *stack ? (*stack)->info : NULL;
     *stack = (*stack)->next;
 }
-
+f
 KDTreeNode * kdstackPop(KDStack **stack) {
 
     KDTreeNode *aux;
@@ -146,7 +146,7 @@ KDTreeNode * kdstackPop(KDStack **stack) {
 }
 
 void kdnodePrint(KDTreeNode *node) {
-    printf("((%.2f,%.2f)-[%s]) ", node->dotinfo.xcoord, node->dotinfo.ycoord, node->dotinfo.tag);
+    printf("((%06.2f,%05.2f)-[%s]) ", node->dotinfo.xcoord, node->dotinfo.ycoord, node->dotinfo.tag);
 }
 
 void inOrden(KDTreeNode *subroot) {
@@ -189,7 +189,7 @@ void TreePrinterPop() {
 void treePrinterRec(KDTreeNode *subroot) {
 
     setbuf(stdout, NULL);
-    printf("(%03.2f; %03.2f)\n", subroot->dotinfo.xcoord, subroot->dotinfo.ycoord);
+    printf("(%06.2f; %05.2f)\n", subroot->dotinfo.xcoord, subroot->dotinfo.ycoord);
     
     if (subroot->right) {
         printf("%s `-(RIGHT)--", tprinter_depth);
