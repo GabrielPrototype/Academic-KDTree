@@ -34,9 +34,10 @@ int main(int argc, char** argv) {
     setbuf(stdin, NULL);
 
     char cmd_line[CMD_LINE_MAX];
-    char cmd_aux[30];
+    char cmd_aux[CMD_LINE_MAX];
     char *cmd_aux_ptr = NULL;
     char cmd_ok = NULL;
+    double radius = 0;
     int num = 0;
     int i;
 
@@ -89,15 +90,23 @@ int main(int argc, char** argv) {
             cmd_ok = !NULL;
 
         } else if (strncmp(cmd_line, "SEARCH IN TREE AT POINT ", 24) == 0) {
-            printf("\n3\n");
-
+            strncpy(cmd_line, &cmd_line[24], CMD_LINE_MAX);
+            strncpy(cmd_aux, cmd_line, CMD_LINE_MAX);
             cmd_ok = !NULL;
+            //cmd_aux_ptr = strtok(cmd_line, "; ");
 
+            if (sscanf(cmd_aux, "%lf", &kddot.xcoord) != 0) {
+                
+                if(sscanf(cmd_aux, "%*lf;%lf", &kddot.ycoord) != 0){
+                    printf("\nok %f\n",kddot.ycoord);
+                }
+                
+            }
         } else if (strncmp(cmd_line, "INSERT AUTO ", 12) == 0) {
 
             strncpy(cmd_line, &cmd_line[12], CMD_LINE_MAX);
             if (sscanf(cmd_line, "%d", &num) != 0 && num > 0 && num < 5999) {
-                
+
                 printf("\n");
                 for (i = 0; i < num; i++) {
                     kddot.xcoord = randFrom(-99.0, 99.0);
