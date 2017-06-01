@@ -43,6 +43,8 @@ int main(int argc, char** argv) {
 
     Dot kddot;
     KDTreeNode *root = NULL;
+    KDTreeNode *resultNode = NULL;
+    KDStack *kdstck = NULL;
 
     cliTextHead();
     printf("\nCMD>");
@@ -65,14 +67,18 @@ int main(int argc, char** argv) {
                         //printf("---> ok");
                         strncpy(kddot.tag, " ", TAGLEN);
                         kdtreeInsert(&root, kddot);
-                        printf("\n---> Inserted (%3.3f, %2.3f) successfully\n", kddot.xcoord, kddot.ycoord);
+                        printf("\n---> Inserted (%7.3f, %7.3f) successfully\n", kddot.xcoord, kddot.ycoord);
 
                         cmd_ok = !NULL;
                     } else {
                         printf("\n--->Coordinates out of range (x: 0 to 180, y: 0 to 90)\n");
 
                     }
+                } else {
+                    printf("\n--->Error in argument\n");
                 }
+            } else {
+                printf("\n--->Error in argument\n");
             }
 
         } else if (strncmp(cmd_line, "SHOW TREE", CMD_LINE_MAX) == 0) {
@@ -96,11 +102,51 @@ int main(int argc, char** argv) {
             //cmd_aux_ptr = strtok(cmd_line, "; ");
 
             if (sscanf(cmd_aux, "%lf", &kddot.xcoord) != 0) {
-                
-                if(sscanf(cmd_aux, "%*lf;%lf", &kddot.ycoord) != 0){
-                    printf("\nok %f\n",kddot.ycoord);
+
+                if (sscanf(cmd_aux, "%*lf;%lf", &kddot.ycoord) != 0) {
+
+                    if (sscanf(cmd_aux, "%*lf;%*lf WITH RADIUS %lf", &radius) != 0) {
+                        kdtreeSearchNearestInRadius(&resultNode, root, kddot, radius);
+                        printf("---- Nearest point of %.2f;%.2f in a radius %.2f:\n", kddot.xcoord, kddot.ycoord, radius);
+                        printf("---- (%03.2f;%03.2f)\n", resultNode->dotinfo.xcoord, resultNode->dotinfo.ycoord);
+
+                    } else {
+                        printf("\n---> Error in argument\n");
+                    }
+                } else {
+                    printf("\n---> Error in argument\n");
                 }
-                
+
+            } else {
+                printf("\n---> Error in argument\n");
+            }
+        } else if (strncmp(cmd_line, "SEARCH ALL IN TREE AT POINT ", 28) == 0) {
+            strncpy(cmd_line, &cmd_line[28], CMD_LINE_MAX);
+            strncpy(cmd_aux, cmd_line, CMD_LINE_MAX);
+            cmd_ok = !NULL;
+            //cmd_aux_ptr = strtok(cmd_line, "; ");
+
+            if (sscanf(cmd_aux, "%lf", &kddot.xcoord) != 0) {
+
+                if (sscanf(cmd_aux, "%*lf;%lf", &kddot.ycoord) != 0) {
+
+                    if (sscanf(cmd_aux, "%*lf;%*lf WITH RADIUS %lf", &radius) != 0) {
+                        kdtreeSearchInRadius(&kdstck, root, kddot, radius);
+                        printf("---- All points within a radius %.2f with center at %.2f;%.2f:\n", radius, kddot.xcoord, kddot.ycoord);
+                        while (resultNode = kdstackPop(&kdstck)) {
+                            if (resultNode)
+                                printf("---- (%07.2f;%07.2f)\n", resultNode->dotinfo.xcoord, resultNode->dotinfo.ycoord);
+                        }
+
+                    } else {
+                        printf("\n---> Error in argument\n");
+                    }
+                } else {
+                    printf("\n---> Error in argument\n");
+                }
+
+            } else {
+                printf("\n---> Error in argument\n");
             }
         } else if (strncmp(cmd_line, "INSERT AUTO ", 12) == 0) {
 
@@ -109,11 +155,11 @@ int main(int argc, char** argv) {
 
                 printf("\n");
                 for (i = 0; i < num; i++) {
-                    kddot.xcoord = randFrom(-99.0, 99.0);
-                    kddot.ycoord = randFrom(-99.0, 99.0);
+                    kddot.xcoord = randFrom(0.0, 180.0);
+                    kddot.ycoord = randFrom(0.0, 99.0);
                     strncpy(kddot.tag, " ", TAGLEN);
                     kdtreeInsert(&root, kddot);
-                    printf("---> Inserted (%3.3f, %2.3f) successfully\n", kddot.xcoord, kddot.ycoord);
+                    printf("---> Inserted (%7.3f, %7.3f) successfully\n", kddot.xcoord, kddot.ycoord);
                 }
             } else {
                 printf("\n--->Error in argument\n");
@@ -122,6 +168,11 @@ int main(int argc, char** argv) {
             cmd_ok = !NULL;
         } else if (strncmp(cmd_line, "CLEAR", 5) == 0) {
             system("clear");
+            cmd_ok = !NULL;
+        }
+        if (strncmp(cmd_line, "HELP", 5) == 0) {
+            printf("\n");
+            cliTextHead();
             cmd_ok = !NULL;
         }
 
@@ -147,10 +198,12 @@ int cliTextHead() {
             "* Commands:\n"
             "*  INSERT INTO TREE [xcoord];[ycoord]\n"
             "*  SHOW TREE\n"
-            "*  SHOW TREE PRE ODER\N"
+            "*  SHOW TREE PRE ODER\n"
             "*  SEARCH IN TREE AT POINT [xcoord];[ycoord] WITH RADIUS [radius]\n"
+            "*  SEARCH ALL IN TREE AT POINT [xcoord];[ycoord] WITH RADIUS [radius]\n"
             "*  INSERT AUTO [number of random points]\n"
-            "* \n"
+            "*  \n"
+            "*  HELP (Print this text)\n"
             "*  EXIT\n"
             "*********\n");
 
