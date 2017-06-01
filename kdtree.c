@@ -136,7 +136,7 @@ void kdstackPopV2(KDStack **stack, KDTreeNode **node) {
     *node = *stack ? (*stack)->info : NULL;
     *stack = (*stack)->next;
 }
-f
+
 KDTreeNode * kdstackPop(KDStack **stack) {
 
     KDTreeNode *aux;
