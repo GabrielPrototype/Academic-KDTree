@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
-CND_ARTIFACT_NAME_Debug=academic-kdtree
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/academic-kdtree
+CND_ARTIFACT_NAME_Debug=kdtreeapp
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/kdtreeapp
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=academic-kdtree.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/academic-kdtree.tar
+CND_PACKAGE_NAME_Debug=kdtreeapp.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/kdtreeapp.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=academic-kdtree
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/academic-kdtree
+CND_ARTIFACT_NAME_Release=kdtreeapp
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/kdtreeapp
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=academic-kdtree.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/academic-kdtree.tar
+CND_PACKAGE_NAME_Release=kdtreeapp.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/kdtreeapp.tar
 #
 # include compiler specific variables
 #

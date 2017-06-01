@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
     char cmd_line[CMD_LINE_MAX];
     char cmd_aux[CMD_LINE_MAX];
     char *cmd_aux_ptr = NULL;
-    char cmd_ok = NULL;
+    char cmd_ok = '\0';
     double radius = 0;
     int num = 0;
     int i;
@@ -101,9 +101,9 @@ int main(int argc, char** argv) {
 
             if (sscanf(cmd_aux, "%lf", &kddot.xcoord) != 0) {
 
-                if (sscanf(cmd_aux, "%*lf;%lf", &kddot.ycoord) != 0) {
+                if (sscanf(cmd_aux, "%*f;%lf", &kddot.ycoord) != 0) {
 
-                    if (sscanf(cmd_aux, "%*lf;%*lf WITH RADIUS %lf", &radius) != 0) {
+                    if (sscanf(cmd_aux, "%*f;%*f WITH RADIUS %lf", &radius) != 0) {
                         kdtreeSearchNearestInRadius(&resultNode, root, kddot, radius);
                         printf("---- Nearest point of %.2f;%.2f in a radius %.2f:\n", kddot.xcoord, kddot.ycoord, radius);
                         printf("---- (%03.2f;%03.2f)\n", resultNode->dotinfo.xcoord, resultNode->dotinfo.ycoord);
@@ -125,9 +125,9 @@ int main(int argc, char** argv) {
 
             if (sscanf(cmd_aux, "%lf", &kddot.xcoord) != 0) {
 
-                if (sscanf(cmd_aux, "%*lf;%lf", &kddot.ycoord) != 0) {
+                if (sscanf(cmd_aux, "%*f;%lf", &kddot.ycoord) != 0) {
 
-                    if (sscanf(cmd_aux, "%*lf;%*lf WITH RADIUS %lf", &radius) != 0) {
+                    if (sscanf(cmd_aux, "%*f;%*f WITH RADIUS %lf", &radius) != 0) {
                         kdtreeSearchInRadius(&kdstck, root, kddot, radius);
                         printf("---- All points within a radius %.2f with center at %.2f;%.2f:\n", radius, kddot.xcoord, kddot.ycoord);
                         while (kdstck) {
@@ -183,7 +183,7 @@ int main(int argc, char** argv) {
         printf("\nCMD>");
         fgetsplus(cmd_line, CMD_LINE_MAX, stdin);
         strToUpper(cmd_line, sizeof (cmd_line));
-        cmd_ok = NULL;
+        cmd_ok = '\0';
     }
     return (EXIT_SUCCESS);
 }
