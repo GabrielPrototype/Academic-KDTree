@@ -66,7 +66,7 @@ int main(int argc, char** argv) {
                     if (kddot.ycoord >= 0 && kddot.ycoord <= 90 && kddot.xcoord >= 0 && kddot.xcoord <= 180) {
                         strncpy(kddot.tag, " ", TAGLEN);
                         kdtreeInsert(&root, kddot);
-                        printf("\n---> Inserted (%7.3f, %7.3f) successfully\n", kddot.xcoord, kddot.ycoord);
+                        printf("\n---> (%7.3f, %7.3f) successfully added\n", kddot.xcoord, kddot.ycoord);
 
                         cmd_ok = !NULL;
                     } else {
@@ -157,7 +157,7 @@ int main(int argc, char** argv) {
                     kddot.ycoord = randFrom(0.0, 99.0);
                     strncpy(kddot.tag, " ", TAGLEN);
                     kdtreeInsert(&root, kddot);
-                    printf("---> Inserted (%7.3f, %7.3f) successfully\n", kddot.xcoord, kddot.ycoord);
+                    printf("---> (%7.3f, %7.3f) successfully added\n", kddot.xcoord, kddot.ycoord);
                 }
             } else {
                 printf("\n--->Error in argument\n");
